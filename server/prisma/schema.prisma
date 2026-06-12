@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+datasource db {
+  provider = "postgresql"
+   url      = env("DATABASE_URL")
+ 
+}
+
+model Organisation {
+  id         String     @id @default(uuid())
+  name       String
+  createdAt  DateTime   @default(now())
+  users      User[]
+  auditLogs  AuditLog[]
+  categories Category[]
+  expenses   Expense[]
+
+  @@map("organisations")
+}
+
+model User {
+  id           String       @id @default(uuid())
+  name         String
+  orgId        String
+  email        String       @unique
+  passwordHash String
+  role         Role         @default(MEMBER)
+  isVerified   Boolean      @default(false)
+  inviteToken  String?
+  createdAt    DateTime     @default(now())
+  organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  auditLogs    AuditLog[]
+  expenses     Expense[]
+
+  @@index([orgId])
+}
+
+model Category {
+  id           String       @id @default(uuid())
+  name         String
+  orgId        String
+  budget       Float        @default(0)
+  createdAt    DateTime     @default(now())
+  organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  expenses     Expense[]
+
+  @@index([orgId])
+  @@map("categories")
+}
+
+model Expense {
+  id           String        @id @default(uuid())
+  orgId        String
+  userId       String
+  categoryId   String
+  amount       Float
+  description  String
+  status       ExpenseStatus @default(PENDING)
+  receiptUrl   String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  category     Category      @relation(fields: [categoryId], references: [id])
+  organisation Organisation  @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user         User          @relation(fields: [userId], references: [id])
+
+  @@index([orgId])
+  @@index([status])
+  @@index([userId])
+  @@map("expenses")
+}
+
+model AuditLog {
+  id           String       @id @default(uuid())
+  orgId        String
+  auditorId    String
+  action       String
+  targetId     String?
+  metaData     Json?
+  createdAt    DateTime     @default(now())
+  user         User         @relation(fields: [auditorId], references: [id])
+  organisation Organisation @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+  @@map("audit_logs")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
