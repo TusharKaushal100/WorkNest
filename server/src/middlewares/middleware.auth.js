@@ -20,9 +20,9 @@ export const authenticate = (req,res,next)=>{
         return res.status(401).json({message:"Unauthorized"});
     }
 
-    req.userId = isValid.id;
-    req.orgId = isValid.orgid;
-    req.role = isValid.role;
+    req.user.userId = isValid.id;
+    req.user.orgId = isValid.orgid;
+    req.user.role = isValid.role;
 
       next();
     }catch(err){
@@ -51,11 +51,11 @@ export const authorize = (...roles)=>{
    
     return (req,res,next)=>{
        
-        if(!req.role){
+        if(!req.user?.role){
             return res.status(403).json({message:"Forbidden"}); 
         }
 
-        if(!roles.includes(req.role)){
+        if(!roles.includes(req.user.role)){
 
             const err = new Error();
 

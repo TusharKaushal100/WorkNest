@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import errorMiddleware from './middleware/errorMiddleware.js';
+import rateLimiter from './middleware/rateLimiter.js';
 
 const app = express();
 
@@ -8,6 +9,8 @@ app.use(express.json());
 
 app.use(cors({origin: 'http://localhost:5000', credentials: true}));
 
+app.use('/api',rateLimiter);//rateLimiter reads req.orgId, and that's only set after authenticate runs, 
+// unauthenticated routes (register/login) will just fall back to req.ip — correct behavior.
 
 app.use(errorMiddleware); // error middleware should be in the last because 
 // if we put it before the routes then it will catch all the errors and 
