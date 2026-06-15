@@ -1,0 +1,11 @@
+import express from 'express'
+import { authorise,authenticate } from '../middlewares/middleware.auth';
+import { sendInvite,acceptInvite,getMembers} from '../controller/controller.member';
+
+const memberRouter = express.Router();
+
+memberRouter.post('/invite',authenticate,authorise('ADMIN'),sendInvite);
+memberRouter.post('/accept-invite',acceptInvite);
+memberRouter.get('/getMembers',authenticate,authorise('ADMIN'),getMembers);
+
+export default memberRouter;

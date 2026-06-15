@@ -47,7 +47,7 @@ export const authenticate = (req,res,next)=>{
 } 
 
 //this is the implementation of the role based access contole policy 
-export const authorize = (...roles)=>{
+export const authorise = (...roles)=>{
    
     return (req,res,next)=>{
        

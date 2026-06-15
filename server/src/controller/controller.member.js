@@ -16,9 +16,9 @@ export const sendInvite = async (req,res,next)=>{
    
     try{
 
-    const inviteToken = await crypto.randomBytes(20).toString('hex');
+    const inviteToken = crypto.randomBytes(20).toString('hex');
 
-    const inviteLink = `${process.env.CLIENT_URL}/accept-invite?token=inviteToken`;
+    const inviteLink = `${process.env.CLIENT_URL}/accept-invite?token=${inviteToken}`;
 
     const user = await Prisma.user.findUnique({where:{email}});
 
@@ -33,14 +33,23 @@ export const sendInvite = async (req,res,next)=>{
            name:name,
            email:email,
            passwordHash:placeholderPassword,
-           orgId:req.orgId,
+           orgId:req.user?.orgId,
            isVerified:false,
            role:"MEMBER",
            inviteToken:inviteToken
         }
     });
 
-    sendEmail(email,inviteLink,req.user.orgId);
+    const org = await Prisma.organisation.findUnique({where:{id : req.user?.orgId}});
+
+    if (!org) {
+       const err = new Error("Organisation not found");
+       err.status = 404;
+       
+       return next(err);
+    }
+
+    sendEmail(email,inviteLink,org.name);
       
     return res.status(201).json({message:'Invite sent successfully'});
 
@@ -60,7 +69,7 @@ export const acceptInvite = async (req,res,next)=>{
 
     const {token,password} = req.body;
     
-    if(!token || !email){
+    if(!token || !password){
         return res.status(401).json({message:'Token missing'});
     }
    
@@ -72,7 +81,7 @@ export const acceptInvite = async (req,res,next)=>{
 
     const hashedPassword = await bcrypt.hash(password,10);
 
-    Prisma.user.update({
+    await Prisma.user.update({
         where:{id:user.id},
         data:{
             passwordHash:hashedPassword,
@@ -96,7 +105,7 @@ export const getMembers = async (req,res,next)=>{
        
         const members = await Prisma.user.findMany({
         where:{
-            orgId:req.orgId
+            orgId:req.user?.orgId
         },
         select:{
             id:true,
