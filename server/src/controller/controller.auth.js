@@ -96,7 +96,7 @@ export const login = async(req,res,next) =>{
     const requiredFormat = z.object({
     password:z.string().min(6).max(20),
     email:z.string().email()
-});
+    });
     
    const isValid = requiredFormat.safeParse({email,password});
 

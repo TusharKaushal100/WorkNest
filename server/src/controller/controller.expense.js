@@ -1,4 +1,3 @@
-import { includes } from 'zod';
 import Prisma from '../config/db.js'
 
 export const submitExpense = async (req,res,next)=>{
@@ -43,11 +42,11 @@ export const getExpense = async (req,res,next)=>{
         whereClause = {where:{orgId:req.user?.orgId}}
     }else{
         whereClause = {where:{orgId: req.user?.orgId,
-                      userId: req.user?.userId}}
+                      userId: req.user?.userId}}  // well the spread operator that is ... unpacks the {}removes it 
     }
 
-    const findExpense = await Prisma.expense.findMany(whereClause,
-        {includes:{
+    const findExpense = await Prisma.expense.findMany({...whereClause,
+        include:{
             user:{select:{id:true,name:true,email:true,role:true}},
             category:{select:{id:true,name:true,budget:true}}
         }
@@ -57,8 +56,8 @@ export const getExpense = async (req,res,next)=>{
        
     );
 
-    if(!findExpense){
-        return res.status(400).json({message:"No data found"});
+    if(findExpense.length === 0){
+        return res.status(404).json({message:"No data found"});
     }
 
     return res.status(200).json({findExpense});
@@ -72,7 +71,7 @@ export const updateExpenseStatus = async (req,res,next)=>{
 
     try{
       
-         const {id} = req.params;
+    const {id} = req.params;
     const {status} = req.body;
 
     if(status !== "APPROVED" &&  status !== "REJECTED"){
@@ -98,8 +97,10 @@ export const updateExpenseStatus = async (req,res,next)=>{
     await Prisma.expense.update(
          {
             where:{
-                id:id,
-                orgId:req.user?.orgId
+                id:id
+                // ,
+                // orgId:req.user?.orgId  we cant add this because the update only accepts unique fields and orgId is not unique
+                //also the same org condition is already checked above
             },
             data:{
                 status
@@ -109,8 +110,8 @@ export const updateExpenseStatus = async (req,res,next)=>{
 
     await Prisma.auditLog.create({
         data:{
-            orgId : req.user?.id,
-            auditorId : req.user?.id,
+            orgId : req.user?.orgId,
+            auditorId : req.user?.userId,
             action : `${status} expense`,
             targetId : id
 

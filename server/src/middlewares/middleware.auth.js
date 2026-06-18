@@ -20,9 +20,11 @@ export const authenticate = (req,res,next)=>{
         return res.status(401).json({message:"Unauthorized"});
     }
 
-    req.user.userId = isValid.id;
-    req.user.orgId = isValid.orgid;
-    req.user.role = isValid.role;
+    // req.user.userId = isValid.id;
+    // req.user.orgId = isValid.orgid;
+    // req.user.role = isValid.role;  this will throw the type error
+
+    req.user = { userId: isValid.id, orgId: isValid.orgid, role: isValid.role }
 
       next();
     }catch(err){
