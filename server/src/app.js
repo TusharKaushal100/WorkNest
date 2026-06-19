@@ -5,6 +5,7 @@ import rateLimiter from './middleware/rateLimiter.js';
 import categoryRoute from './routes/routes.category.js';
 import memberRouter from './routes/routes.member.js';
 import authRouter from './routes/routes.auth.js';
+import dashboardRouter from './routes/routes.dashboard.js'
 import dotenv from'dotenv'
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use('/api',rateLimiter);//rateLimiter reads req.orgId, and that's only set a
 app.use('/api/categories',categoryRoute);
 app.use('/api/member',memberRouter);
 app.use('/api/auth',authRouter);
+app.use('/api/dashboard', dashboardRouter);
 
 
 app.use(errorMiddleware); // error middleware should be in the last because 

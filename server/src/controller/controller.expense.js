@@ -1,4 +1,5 @@
 import Prisma from '../config/db.js'
+import { invalidateDashboardCache } from './controller.dashboard.js'
 
 export const submitExpense = async (req,res,next)=>{
     
@@ -116,7 +117,9 @@ export const updateExpenseStatus = async (req,res,next)=>{
             targetId : id
 
         }
-    })
+    });
+
+    await invalidateDashboardCache(req.user?.orgId);
 
     return res.status(200).json({message:`The status is successfullu update to ${status}`});
     
