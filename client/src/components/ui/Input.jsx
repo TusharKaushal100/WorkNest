@@ -1,6 +1,6 @@
 
 
-const defaultStyle = "rounded-md px-3 py-2 mt-2 hover:bg-gray-300 w-full duration:200 transition-all"
+const defaultStyle = "rounded-lg shadow-lg px-3 py-2  mt-3  hover:bg-gray-200 border-none text-black bg-white w-full duration:200 transition-all"
 
 export const Input = (props)=>{
    

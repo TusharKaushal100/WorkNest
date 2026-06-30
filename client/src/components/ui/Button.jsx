@@ -1,6 +1,6 @@
 import { buttonSize,textSize} from "./size"
 
-const defaultStyle = "rounded-md flex items-center justify-center gap-2 hover:opacity-90 duration-200 transition-all"
+const defaultStyle = "rounded-md flex items-center justify-center gap-2 hover:opacity-70 duration-200 transition-all"
 
 const variant = {
     "primary":"bg-blue-600 text-white",
