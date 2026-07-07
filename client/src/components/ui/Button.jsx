@@ -9,7 +9,7 @@ const variant = {
 
 export const Button = (props)=>{
     
-    return <button className={`${props.className} ${defaultStyle} ${buttonSize[props.size]} ${variant[props.variant]} ${textSize[props.textSize]} `} >
+    return <button className={`${props.className} ${defaultStyle} ${buttonSize[props.size]} ${variant[props.variant]} ${textSize[props.textSize]} `} onClick={props.onClick} >
         {props.startinItem ? props.startingItem : null }
         {props.text}
         {props.endIcon?props.endIcon : null}

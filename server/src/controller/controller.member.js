@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 import dotenv from 'dotenv'
-import { sendEmail } from '../services/services.email';
+import { sendEmail } from '../services/services.email.js';
 import Prisma from '../config/db.js'
 import bcrypt from 'bcrypt'
 

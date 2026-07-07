@@ -1,6 +1,6 @@
 import express from 'express'
-import { authorise,authenticate } from '../middlewares/middleware.auth';
-import { sendInvite,acceptInvite,getMembers} from '../controller/controller.member';
+import { authorise,authenticate } from '../middlewares/middleware.auth.js';
+import { sendInvite,acceptInvite,getMembers} from '../controller/controller.member.js';
 
 const memberRouter = express.Router();
 

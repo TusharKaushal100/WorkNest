@@ -7,7 +7,8 @@ const generateToken = (user)=>{
 
     const token = jwt.sign({id:user.id,
         orgid:user.orgId,
-        role:user.role},
+        role:user.role,
+    name:user.name,},
         process.env.JWT_SECRET,
         {expiresIn:'1d'}
     );
@@ -16,7 +17,8 @@ const generateToken = (user)=>{
 }
 
 export const register = async (req,res,next) =>{
-
+   
+    console.log("register function called");
    try{
         const {orgname,name,email,password} = req.body;
 
@@ -72,6 +74,8 @@ export const register = async (req,res,next) =>{
     })
 
     const token = generateToken(result.user);
+
+    console.log("user created successfully");
 
     return res.status(201).json({message:"user created successfully",token});
 

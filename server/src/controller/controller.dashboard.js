@@ -1,8 +1,8 @@
-import redis from '../config/redis.js'
+import {redis} from '../config/redis.js'
 import Prisma from '../config/db.js'
 
 export const getDashboard = async (req,res,next)=>{
-
+    console.log("getDashboard function called");
     try{
        
         const cachedKey = `dashboard:${req.user?.orgId}`;
@@ -20,7 +20,7 @@ export const getDashboard = async (req,res,next)=>{
             rejectedCount,
             expenseByCategory,
             recentExpense
-        ] = await promise.all(
+        ] = await Promise.all(
             [
               Prisma.expense.aggregate({
                 where:{orgId:req.user?.orgId , status :"APPROVED"},
@@ -76,7 +76,7 @@ export const getDashboard = async (req,res,next)=>{
                 category:cat?.name,
                 budget:cat?.budget,
                 spent:e._sum.amount || 0,
-                percentageUsed:budget > 0 ? Math.round((e._sum.amount/cat.budget)*100) : null
+                percentageUsed:cat?.budget > 0 ? Math.round((e._sum.amount/cat.budget)*100) : null
             }
         });
        
