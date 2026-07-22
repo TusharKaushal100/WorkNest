@@ -1,5 +1,5 @@
 import {redis} from "../config/redis.js";
-import rateLimit from "express-rate-limit";// this library basically limits the number of requests a user can make to the server in a given time frame, which helps
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";// this library basically limits the number of requests a user can make to the server in a given time frame, which helps
 //  to prevent abuse and protect against DDoS attacks.
 //and acts as Express middleware------------- 
 // It works by
@@ -17,7 +17,8 @@ export const rateLimiter = rateLimit({ // it returns a middleware function that 
     max:100,
     standardHeaders:true,
     legacyHeaders:false,
-    keyGenerator:(req)=>req.user?.orgId || req.ip,//rateLimiter reads req.orgId, and that's only set after authenticate runs, 
+       keyGenerator: (req) =>
+        req.user?.orgId ?? ipKeyGenerator(req),//rateLimiter reads req.orgId, and that's only set after authenticate runs, 
     // unauthenticated routes (register/login) will just fall back to req.ip 
     //if we dont add the code below it then by default the data would be stored in the server's memory, which is not ideal 
     // for distributed systems where multiple instances of the server are running. By using Redis as the store, we can ensure
