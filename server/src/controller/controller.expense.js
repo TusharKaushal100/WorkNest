@@ -61,7 +61,7 @@ export const getExpense = async (req,res,next)=>{
         return res.status(404).json({message:"No data found"});
     }
 
-    return res.status(200).json({findExpense});
+     return res.status(200).json({ expenses: findExpense });
     }catch(err){
         next(err);
     }
