@@ -85,7 +85,7 @@ export const Expenses = () => {
 
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-xl font-semibold">Expenses</h1>
-                <Button text={showForm ? "Cancel" : "+ New Expense"} Variant="primary" size="sm" textSize="sm"
+                <Button text={showForm ? "Cancel" : "+ New Expense"} variant={"primary"} size={"sm"} textSize={"sm"}
                     onClick={() => setShowForm(!showForm)}></Button>
             </div>
 
@@ -109,8 +109,8 @@ export const Expenses = () => {
                             ))}
                         </select>
 
-                        <Button text="Submit Expense" Variant="primary" size="sm" textSize="sm"
-                            className="w-full mt-1" onClick={handleSubmit}></Button>
+                        <Button text={"Submit Expense"} variant={"primary"} size={"sm"} textSize={"sm"}
+                            className={"w-full mt-1"} onClick={handleSubmit}></Button>
                     </div>
                 </div>
             )}

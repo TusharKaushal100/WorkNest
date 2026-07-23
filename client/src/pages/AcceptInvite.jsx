@@ -55,12 +55,12 @@ export const AcceptInvite = () => {
                 <p className="text-blue-300 text-sm mb-6">Set your password to activate your account</p>
 
                 <input ref={passwordRef} type="password" placeholder="Set a password"
-                    className="rounded-md px-4 py-2 mt-2 border w-full focus:outline-none focus:border-blue-500 text-sm" />
+                    className="rounded-md bg-white px-4 py-2 mt-2 border w-full focus:outline-none focus:border-blue-500 text-sm" />
 
                 <input ref={confirmPasswordRef} type="password" placeholder="Confirm password"
-                    className="rounded-md px-4 py-2 mt-2 border w-full focus:outline-none focus:border-blue-500 text-sm" />
+                    className="rounded-md bg-white px-4 py-2 mt-2 border w-full focus:outline-none focus:border-blue-500 text-sm" />
 
-                <Button className={"w-full mt-5"} size={"sm"} Variant="primary" textSize={"lg"}
+                <Button className={"w-full mt-5"} size={"sm"} variant={"primary"} textSize={"lg"}
                     text={"Activate Account"} onClick={() => { handleAccept() }}></Button>
             </div>
         </div>

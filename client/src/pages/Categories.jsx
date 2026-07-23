@@ -59,7 +59,7 @@ export const Categories = () => {
 
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-xl font-semibold">Categories</h1>
-                <Button text={showForm ? "Cancel" : "+ New Category"} Variant="primary" size="sm" textSize="sm"
+                <Button text={showForm ? "Cancel" : "+ New Category"} variant="primary" size="sm" textSize="sm"
                     onClick={() => setShowForm(!showForm)}></Button>
             </div>
 
@@ -71,8 +71,8 @@ export const Categories = () => {
                             className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-blue-500 w-full" />
                         <input ref={budgetRef} type="number" placeholder="Budget limit (₹)"
                             className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-blue-500 w-full" />
-                        <Button text="Create" Variant="primary" size="sm" textSize="sm"
-                            className="w-full mt-1" onClick={handleCreate}></Button>
+                        <Button text="Create" variant={"primary"} size={"sm"} textSize={"sm"}
+                            className={"w-full mt-1"} onClick={handleCreate}></Button>
                     </div>
                 </div>
             )}

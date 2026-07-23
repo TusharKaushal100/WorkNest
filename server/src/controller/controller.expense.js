@@ -18,7 +18,7 @@ export const submitExpense = async (req,res,next)=>{
 
       const expense = await Prisma.expense.create({data:{
          categoryId : findCategory.id,
-         amount : amount,
+         amount : parseFloat(amount),
          description:description,
          status:"PENDING",
          orgId:req.user?.orgId,

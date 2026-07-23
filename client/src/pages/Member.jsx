@@ -59,7 +59,7 @@ export const Members = () => {
 
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-xl font-semibold">Members</h1>
-                <Button text={showForm ? "Cancel" : "+ Invite Member"} Variant="primary" size="sm" textSize="sm"
+                <Button text={showForm ? "Cancel" : "+ Invite Member"} variant="primary" size="sm" textSize="sm"
                     onClick={() => setShowForm(!showForm)}></Button>
             </div>
 
@@ -71,7 +71,7 @@ export const Members = () => {
                             className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-blue-500 w-full" />
                         <input ref={emailRef} type="email" placeholder="Member email"
                             className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-blue-500 w-full" />
-                        <Button text="Send Invite" Variant="primary" size="sm" textSize="sm"
+                        <Button text="Send Invite" variant="primary" size="sm" textSize="sm"
                             className="w-full mt-1" onClick={handleInvite}></Button>
                     </div>
                 </div>

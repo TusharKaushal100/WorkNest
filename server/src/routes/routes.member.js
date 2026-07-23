@@ -6,6 +6,6 @@ const memberRouter = express.Router();
 
 memberRouter.post('/invite',authenticate,authorise('ADMIN'),sendInvite);
 memberRouter.post('/accept-invite',acceptInvite);
-memberRouter.get('/getMembers',authenticate,authorise('ADMIN'),getMembers);
+memberRouter.get('/',authenticate,authorise('ADMIN'),getMembers);
 
 export default memberRouter;
